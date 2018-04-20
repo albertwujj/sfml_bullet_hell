@@ -10,8 +10,7 @@ public:
 	{
 		this->setPosition(pos);
 	}
-	vector<int> movement;
+	virtual void moveOnce() = 0;
 
-private:
 	
 };

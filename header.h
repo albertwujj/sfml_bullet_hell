@@ -13,6 +13,14 @@
 #include <sstream>
 #include <conio.h>
 #include <algorithm>
+#include <math.h>
+
+#include "Homing.h"
+#include "Vector2d.h"
+#include "Collision.h"
+#include "Bullet.h"
+#include "PatternBullet.h"
+#include "Vector2d.h"
 
 using std::cout;
 using std::cin;
@@ -27,3 +35,6 @@ using std::ios;
 using std::vector;
 using std::stoi;
 using std::to_string;
+using std::pair;
+using sf::Vector2f;
+
