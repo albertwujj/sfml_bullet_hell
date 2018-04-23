@@ -14,10 +14,11 @@ Player::Player()
 	: cBall_Rad(50.0f), mPos(C::Window_Width / 2, C::Window_Height / 2), mSpeed(0, 0), mAcceleration(3500.0f), mMax_speed(800.0f),
 	mUp(0), mDown(0), mLeft(0), mRight(0)
 {
-	texture.loadFromFile("andy.jpg");
+	texture.loadFromFile("player.png");
 	mShip.setTexture(texture);
 	mShip.setPosition(mPos);
 	mShip.scale(0.5, 0.5);
+	mShip.setTextureRect(sf::IntRect(100, 100, 100, 100));
 }
 
 

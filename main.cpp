@@ -17,18 +17,17 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(1080, 720), "SFML works!");
 
 	//Player player = Player();
-	sf::Image ol;
-	ol.loadFromFile("laser.png");
+	
 	sf::Texture orangeLaser;
-	orangeLaser.loadFromImage(ol);
+	orangeLaser.loadFromFile("laser.png");
 	Homing homing1 = Homing(orangeLaser);
-	Player player = Player();
+	Player player;
+	sf::Time time;
 	sf::Clock clock;
 	while (window.isOpen())
 	{
 		homing1.setTarget(player.getPosition());
-		sf::Time elapsed1 = clock.getElapsedTime();
-		clock.restart();
+		time = clock.restart();
 
 		sf::Event event;
 
@@ -36,13 +35,17 @@ int main()
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
-			player.Update(elapsed1);
+			
 		}
-		//cout << homing1.getPosition().x << homing1.getPosition().y;
-		player.Render(window);
+		player.Update(time);
+		window.setFramerateLimit(20);
+		
+		
 		homing1.moveOnce(5.0);
-		window.draw(homing1);
+		
 		window.clear();
+		window.draw(homing1);
+		player.Render(window);
 		window.display();
 
 	}
