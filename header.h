@@ -1,4 +1,3 @@
-
 #pragma once
 
 #define _CRT_SECURE_NO_WARNINGS
@@ -15,12 +14,7 @@
 #include <algorithm>
 #include <math.h>
 
-#include "Homing.h"
-#include "Vector2d.h"
-#include "Collision.h"
-#include "Bullet.h"
-#include "PatternBullet.h"
-#include "Vector2d.h"
+
 
 using std::cout;
 using std::cin;

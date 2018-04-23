@@ -1,14 +1,13 @@
-#include "Player.hpp"
-#include "Global_Constants.hpp"
 
 #include <iostream>
 #include <math.h>
-
+#include "Player.h"
+#include "GLOBAL_CONSTANTS.h"
 Player::Player()
 	: cBall_Rad(50.0f), mPos(C::Window_Width / 2, C::Window_Height / 2), mSpeed(0, 0), mAcceleration(3500.0f), mMax_speed(800.0f),
 	mUp(0), mDown(0), mLeft(0), mRight(0)
 {	
-	texture.loadFromFile("andy.jpg");
+	texture.loadFromFile("player.png");
 	mShip.setTexture(texture);
 	mShip.setPosition(mPos);
 	mShip.scale(0.5,0.5);
@@ -81,6 +80,10 @@ void Player::Handle_Input()
 		mLeft = false;
 		mRight = false;
 	}
+}
+
+sf::Vector2f Player::getPosition() {
+	return mPos;
 }
 
 bool Player::Set_Vel()

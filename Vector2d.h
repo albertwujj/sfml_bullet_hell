@@ -1,4 +1,4 @@
-#include "header.h"
+#pragma once
 
 class Vector2d : public Vector2f {
 public:

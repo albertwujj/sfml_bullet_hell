@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
@@ -10,6 +12,7 @@ public:
 
 	void Render(sf::RenderWindow &window);
 	void Update(sf::Time delta);
+	sf::Vector2f getPosition();
 
 private:
 	void Handle_Input();

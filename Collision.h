@@ -1,4 +1,3 @@
-#include "header.h"
 
 /*
 * File:   collision.h

@@ -1,17 +1,14 @@
 #pragma once
-
-#include "header.h"
+#include <vector>
+#include "Bullet.h"
 
 
 class Homing : public Bullet
 {
 public:
-	Homing(const sf::Texture &texture, const sf::IntRect &rectangle, sf::Vector2f &pos = sf::Vector2f(0, 0)) :
-		Bullet(texture, rectangle, pos)
-	{
-	}
+	Homing(const sf::Texture &texture = sf::Texture(), const sf::IntRect &rectangle = sf::IntRect(10, 10, 32, 32), sf::Vector2f &pos = sf::Vector2f(0, 0));
 	void moveOnce(float speed);
-	void setTarget(Vector2f target);
+	void setTarget(sf::Vector2f &target);
 private:
-	Vector2f target = Vector2f(0,0);
+	sf::Vector2f target;
 };
