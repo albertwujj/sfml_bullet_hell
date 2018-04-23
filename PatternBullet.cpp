@@ -2,7 +2,7 @@
 #include "PatternBullet.h"
 #include <vector>
 
-PatternBullet::PatternBullet(const sf::Texture &texture, const sf::IntRect &rectangle, sf::Vector2f &pos) :
+PatternBullet::PatternBullet(const sf::Texture &texture, const sf::IntRect &rectangle, const sf::Vector2f &pos) :
 	Bullet(texture, rectangle, pos)
 {
 }
