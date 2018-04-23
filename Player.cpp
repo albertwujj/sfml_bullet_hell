@@ -2,23 +2,30 @@
 #include <iostream>
 #include <math.h>
 #include "Player.h"
-#include "GLOBAL_CONSTANTS.h"
+namespace C
+{
+
+	const float Window_Width = 1080;
+	const float Window_Height = 720;
+
+}
+
 Player::Player()
 	: cBall_Rad(50.0f), mPos(C::Window_Width / 2, C::Window_Height / 2), mSpeed(0, 0), mAcceleration(3500.0f), mMax_speed(800.0f),
 	mUp(0), mDown(0), mLeft(0), mRight(0)
-{	
-	texture.loadFromFile("player.png");
+{
+	texture.loadFromFile("andy.jpg");
 	mShip.setTexture(texture);
 	mShip.setPosition(mPos);
-	mShip.scale(0.5,0.5);
+	mShip.scale(0.5, 0.5);
 }
 
 
 
 void Player::Render(sf::RenderWindow &window)
 {
-	
-	
+
+
 	window.draw(mShip);
 }
 
@@ -44,23 +51,23 @@ void Player::Handle_Input()
 	mLeft = sf::Keyboard::isKeyPressed(sf::Keyboard::A) || sf::Keyboard::isKeyPressed(sf::Keyboard::Left);
 	mRight = sf::Keyboard::isKeyPressed(sf::Keyboard::D) || sf::Keyboard::isKeyPressed(sf::Keyboard::Right);
 
-	if (mPos.x < 0) 
+	if (mPos.x < 0)
 	{
 		mPos.x = 0;
 		mSpeed.x = 0;
-		
+
 	}
 	if (mPos.x >= C::Window_Width - 50)
 	{
 		mPos.x = C::Window_Width - 50;
 		mSpeed.x = 0;
-		
+
 	}
 	if (mPos.y < 0)
 	{
 		mPos.y = 0;
-		mSpeed.y =0;
-		
+		mSpeed.y = 0;
+
 	}
 	if (mPos.y >= C::Window_Height - 50)
 	{
@@ -68,9 +75,9 @@ void Player::Handle_Input()
 		mSpeed.y = 0;
 
 	}
-	
-	
-	
+
+
+
 	if (mUp && mDown) { //if trying to press both dont do anything on y-axis
 		mUp = false;
 		mDown = false;
@@ -117,15 +124,15 @@ sf::Vector2f Player::Calc_Speed(sf::Time delta)
 	////////////
 
 	//Y-Axis
-	if (mSpeed.y < mMax_speed && mSpeed.y > -mMax_speed && (mUp || mDown)) {	
-		mSpeed.y += mAcceleration * mVel.y * delta.asSeconds();					
-	}																			
+	if (mSpeed.y < mMax_speed && mSpeed.y > -mMax_speed && (mUp || mDown)) {
+		mSpeed.y += mAcceleration * mVel.y * delta.asSeconds();
+	}
 
-	if (mSpeed.y > mMax_speed || mSpeed.y < -mMax_speed)	
+	if (mSpeed.y > mMax_speed || mSpeed.y < -mMax_speed)
 		mSpeed.y = mMax_speed * mVel.y;
 
 	//X-Axis
-	if (mSpeed.x < mMax_speed && mSpeed.x > -mMax_speed && (mLeft || mRight)) { 
+	if (mSpeed.x < mMax_speed && mSpeed.x > -mMax_speed && (mLeft || mRight)) {
 		mSpeed.x += mAcceleration * mVel.x * delta.asSeconds();
 	}
 
@@ -136,14 +143,14 @@ sf::Vector2f Player::Calc_Speed(sf::Time delta)
 	////////////
 
 	//Y-Axis
-	if (!mUp && !mDown) {										
-		if (mVel.y > 0) {							
-			mSpeed.y -= mAcceleration * delta.asSeconds();		
-			if (mSpeed.y <= 0) {				
-				mSpeed.y = mVel.y = 0.0f;		
+	if (!mUp && !mDown) {
+		if (mVel.y > 0) {
+			mSpeed.y -= mAcceleration * delta.asSeconds();
+			if (mSpeed.y <= 0) {
+				mSpeed.y = mVel.y = 0.0f;
 			}
 		}
-		else if (mVel.y < 0) {					
+		else if (mVel.y < 0) {
 			mSpeed.y += mAcceleration * delta.asSeconds();
 			if (mSpeed.y >= 0) {
 				mSpeed.y = mVel.y = 0.0f;
@@ -152,7 +159,7 @@ sf::Vector2f Player::Calc_Speed(sf::Time delta)
 	}
 
 	//X-Axis
-	if (!mLeft && !mRight) { 
+	if (!mLeft && !mRight) {
 		if (mVel.x > 0) {
 			mSpeed.x -= mAcceleration * delta.asSeconds();
 			if (mSpeed.x <= 0) {

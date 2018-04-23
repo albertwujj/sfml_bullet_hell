@@ -25,7 +25,7 @@ private:
 	sf::Vector2f mPos;
 	//variables for clean movement
 	sf::Vector2f mSpeed;
-    float mAcceleration;
+	float mAcceleration;
 	const float mMax_speed;
 
 	//variables for input
@@ -39,5 +39,4 @@ private:
 
 
 #endif //PLAYER_HPP
-
 
