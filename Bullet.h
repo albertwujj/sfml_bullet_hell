@@ -8,6 +8,7 @@ public:
 		Sprite(texture, rectangle)
 	{
 		this->setPosition(pos);
+		
 	}
 	virtual void update(sf::Time delta) = 0;
 private:

@@ -22,6 +22,8 @@ int main()
 
 	seedRand();
 
+	
+
 	sf::RenderWindow window(sf::VideoMode(1080, 720), "SFML works!");
 	window.setFramerateLimit(60);
 	int numFlankers = 50;
@@ -35,16 +37,20 @@ int main()
 		randomFlankings.push_back(r);
 	}
 	vector<PatternBullet> spiral = createGroup<PatternBullet>(numFlankers, sf::Vector2f(100,100), 1);
-	
 	Player player;
 	sf::Time delta;
 	sf::Clock clock;
 
 	vector<Bullet*> allBullets;
-	/*
+	
+	for (auto & h : homings) {
+		allBullets.push_back(&h);
+	}
+
 	for (auto & s : spiral) {
 		s.addSpiral();
-	} */
+		allBullets.push_back(&s);
+	} 
 
 	int iterations = 0;
 	while (window.isOpen())
@@ -56,7 +62,7 @@ int main()
 		//where the player is expected to be, based on current velocity, r seconds into the future
 		if (iterations % 100 == 0) {
 			for (auto & r : randomFlankings) {
-				r = getRand() % 100000 - 50000;
+				r = getRand() % 100000 - 10000;
 			}
 		}
 		int h = 0;
@@ -80,10 +86,10 @@ int main()
 		player.Update(delta);
 
 		window.clear();
-		/*
+		
 		for (auto & s : spiral) {
 			window.draw(s);
-		} */
+		} 
 		for (auto & homing : homings) {
 			window.draw(homing);
 		}
