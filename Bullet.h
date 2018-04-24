@@ -10,6 +10,7 @@ public:
 		this->setPosition(pos);
 	}
 
+
 	
 };
 

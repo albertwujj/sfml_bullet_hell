@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <time.h>
 #include "header.h"
 #include "Homing.h"
 #include "PatternBullet.h"
@@ -10,23 +11,35 @@
 
 using std::cout;
 using std::endl;
+using std::vector;
+using Iter = std::vector<int>::const_iterator;
+
 int main()
 {
-
-
+	srand(time(NULL));
 	sf::RenderWindow window(sf::VideoMode(1080, 720), "SFML works!");
+	window.setFramerateLimit(60);
 
-	//Player player = Player();
-	
 	sf::Texture orangeLaser;
 	orangeLaser.loadFromFile("laser.png");
-	Homing homing1 = Homing(orangeLaser);
+	
+	vector<Homing> homings;
+	int i = 0;
+	for (i = 0; i < 100; i++) {
+		Vector2f pos = Vector2f(rand() % 100 + 1, rand() % 100 + 1);
+		homings.push_back(Homing(500.0, pos));
+	}
+
 	Player player;
 	sf::Time time;
 	sf::Clock clock;
 	while (window.isOpen())
 	{
-		homing1.setTarget(player.getPosition());
+	
+		for (auto & homing : homings) {
+			homing.setTarget(player.getPosition());
+		}
+
 		time = clock.restart();
 
 		sf::Event event;
@@ -37,15 +50,24 @@ int main()
 				window.close();
 			
 		}
+		for (auto & homing : homings) {
+			homing.moveOnce(time);
+		}
+		
 		player.Update(time);
-		window.setFramerateLimit(20);
 		
-		
-		homing1.moveOnce(5.0);
 		
 		window.clear();
-		window.draw(homing1);
-		player.Render(window);
+		for (auto homing : homings) {
+			window.draw(homing);
+		}
+
+		for (auto & homing : homings) {
+			if (!Collision::BoundingBoxTest(player.getSprite(), homing)) {
+				player.Render(window);
+			}
+		}
+		
 		window.display();
 
 	}

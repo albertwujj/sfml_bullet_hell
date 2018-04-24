@@ -8,17 +8,18 @@
 class Player
 {
 public:
+	friend class Homing;
 	Player();
 
 	void Render(sf::RenderWindow &window);
 	void Update(sf::Time delta);
 	sf::Vector2f getPosition();
+	sf::Sprite getSprite();
 
 private:
 	void Handle_Input();
 	bool Set_Vel();
 	sf::Vector2f Calc_Speed(sf::Time delta);
-
 	sf::Texture texture;
 	sf::Sprite mShip;
 	sf::Vector2f mVel;

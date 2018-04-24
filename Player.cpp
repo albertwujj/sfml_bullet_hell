@@ -22,7 +22,9 @@ Player::Player()
 }
 
 
-
+sf::Sprite Player::getSprite() {
+	return mShip;
+}
 void Player::Render(sf::RenderWindow &window)
 {
 
