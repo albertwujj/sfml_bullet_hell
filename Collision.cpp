@@ -110,7 +110,7 @@ namespace Collision
 	sf::Vector2f GetSpriteSize(const sf::Sprite& Object)
 	{
 		sf::IntRect OriginalSize = Object.getTextureRect();
-		sf::Vector2f Scale = Object.getScale();
+		sf::Vector2f Scale = (float) 0.5 * Object.getScale();
 		return sf::Vector2f(OriginalSize.width*Scale.x, OriginalSize.height*Scale.y);
 	}
 

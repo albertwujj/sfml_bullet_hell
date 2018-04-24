@@ -32,3 +32,6 @@ using std::to_string;
 using std::pair;
 using sf::Vector2f;
 
+int getRand();
+void seedRand();
+

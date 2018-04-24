@@ -96,6 +96,10 @@ sf::Vector2f Player::getPosition() {
 	return mPos;
 }
 
+sf::Vector2f Player::getVel() {
+	return mVel;
+}
+
 bool Player::Set_Vel()
 {
 	if (!mSpeed.y && (!mUp || !mDown)) {

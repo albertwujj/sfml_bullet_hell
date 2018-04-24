@@ -8,68 +8,94 @@
 #include "GLOBAL_CONSTANTS.h"
 #include "Player.h"
 #include "Vector2d.h"
+#include <iostream>
+#include <random>
+#include <cstdlib>
+#include "bulletgroups.h"
 
 using std::cout;
 using std::endl;
 using std::vector;
-using Iter = std::vector<int>::const_iterator;
 
 int main()
 {
-	srand(time(NULL));
+
+	seedRand();
+
 	sf::RenderWindow window(sf::VideoMode(1080, 720), "SFML works!");
 	window.setFramerateLimit(60);
+	int numFlankers = 50;
 
-	sf::Texture orangeLaser;
-	orangeLaser.loadFromFile("laser.png");
+	vector<Homing> homings = createGroup<Homing>(numFlankers, sf::Vector2f(1, 1), 100);
 	
-	vector<Homing> homings;
+	vector<int> randomFlankings;
 	int i = 0;
-	for (i = 0; i < 100; i++) {
-		Vector2f pos = Vector2f(rand() % 100 + 1, rand() % 100 + 1);
-		homings.push_back(Homing(500.0, pos));
+	for (i = 0; i < numFlankers; i++) {
+		int r = getRand() % 10000 - 5000;
+		randomFlankings.push_back(r);
 	}
-
+	vector<PatternBullet> spiral = createGroup<PatternBullet>(numFlankers, sf::Vector2f(100,100), 1);
+	
 	Player player;
-	sf::Time time;
+	sf::Time delta;
 	sf::Clock clock;
+
+	vector<Bullet*> allBullets;
+	/*
+	for (auto & s : spiral) {
+		s.addSpiral();
+	} */
+
+	int iterations = 0;
 	while (window.isOpen())
 	{
-	
+		delta = clock.restart();
+
+		//set targets for homing bullets
+		//a bullet will, rather than always targetting the exact position of the player, will target
+		//where the player is expected to be, based on current velocity, r seconds into the future
+		if (iterations % 100 == 0) {
+			for (auto & r : randomFlankings) {
+				r = getRand() % 100000 - 50000;
+			}
+		}
+		int h = 0;
 		for (auto & homing : homings) {
-			homing.setTarget(player.getPosition());
+			homing.setTarget(player.getPosition() + (player.getVel() * (float)randomFlankings.at(h)));
+			h++;
 		}
 
-		time = clock.restart();
-
+		
 		sf::Event event;
 
 		while (window.pollEvent(event))
 		{
 			if (event.type == sf::Event::Closed)
 				window.close();
-			
 		}
 		for (auto & homing : homings) {
-			homing.moveOnce(time);
+			homing.update(delta);
 		}
-		
-		player.Update(time);
-		
-		
+
+		player.Update(delta);
+
 		window.clear();
-		for (auto homing : homings) {
+		/*
+		for (auto & s : spiral) {
+			window.draw(s);
+		} */
+		for (auto & homing : homings) {
 			window.draw(homing);
 		}
 
 		for (auto & homing : homings) {
-			if (!Collision::BoundingBoxTest(player.getSprite(), homing)) {
-				player.Render(window);
+			if (Collision::CircleTest(player.getSprite(), homing)) {
+				window.close();
 			}
 		}
-		
+		player.Render(window);
 		window.display();
-
+		iterations++;
 	}
 
 	return 0;

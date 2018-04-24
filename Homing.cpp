@@ -5,14 +5,14 @@
 
 using std::cout;
 
-Homing::Homing(float speed, const sf::Vector2f &pos, const sf::Texture &texture, const sf::IntRect &rectangle) :
+Homing::Homing(const sf::Vector2f &pos, float speed,  const sf::Texture &texture, const sf::IntRect &rectangle) :
 	Bullet(texture, rectangle, pos)
 {
 	target = sf::Vector2f(0, 0);
 	this->speed = speed;
 }
 
-void Homing::moveOnce(sf::Time delta) {
+void Homing::update(sf::Time delta) {
 
 	
 

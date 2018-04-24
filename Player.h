@@ -14,8 +14,9 @@ public:
 	void Render(sf::RenderWindow &window);
 	void Update(sf::Time delta);
 	sf::Vector2f getPosition();
+	sf::Vector2f getVel();
 	sf::Sprite getSprite();
-
+	
 private:
 	void Handle_Input();
 	bool Set_Vel();
