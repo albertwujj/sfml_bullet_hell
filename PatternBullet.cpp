@@ -13,7 +13,7 @@ PatternBullet::PatternBullet(const sf::Vector2f &pos, const sf::Texture &texture
 }
 
 //add a movement to the end of the vector of movements, each represented by a 2-element vector- the x and y direction
-void PatternBullet::addMovement(sf::Vector2f & movement) {
+void PatternBullet::addMovement(const sf::Vector2f & movement) {
 	this->movements.push_back(movement);
 }
 
@@ -22,7 +22,6 @@ void PatternBullet::addMovement(sf::Vector2f & movement) {
 //then reset the sinceLast count to 0
 void PatternBullet::update(sf::Time & delta) {
 	sinceLast += delta.asMilliseconds();
-	cout << sinceLast << endl;
 	if (sinceLast > delay && movements.size() > 0) {
 		sf::Vector2f movement = movements.front();
 		movements.erase(movements.begin());
@@ -45,7 +44,7 @@ void PatternBullet::addSpiral(int initialDir, bool counterclockwise, int finalRa
 	int i = 0;
 	sf::Vector2f totalDist = sf::Vector2f(0, 0);
 	i = 0;
-	while (i < 1000) {
+	while (i < 10) {
 		int dir = counterclockwise ? 3 - ((i + initialDir) % 4) : (i + initialDir) % 4;
 		switch (dir) {
 			//move up

@@ -28,7 +28,7 @@ int main()
 	window.setFramerateLimit(60);
 	int numFlankers = 50;
 
-	vector<Homing> homings = createGroup<Homing>(numFlankers, sf::Vector2f(1, 1), 100);
+	vector<Homing> homings = createGroup<Homing>(numFlankers, sf::Vector2f(1, 1), 50);
 
 	vector<int> randomFlankings;
 	int i = 0;
