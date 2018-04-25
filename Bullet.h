@@ -8,11 +8,6 @@ public:
 		Sprite(texture, rectangle)
 	{
 		this->setPosition(pos);
-		sf::Texture *standard = new sf::Texture;
-		standard->loadFromFile("missle.png");
-		this->setTexture(*standard);
-		this->scale(0.2, 0.2);
-		
 	}
 	virtual void update(sf::Time & delta) = 0;
 private:

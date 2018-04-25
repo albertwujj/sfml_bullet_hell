@@ -28,7 +28,11 @@ int main()
 	window.setFramerateLimit(60);
 	int numFlankers = 50;
 
-	vector<Homing> homings = createGroup<Homing>(numFlankers, sf::Vector2f(1, 1), 50);
+	sf::Texture missile;
+	if (!missile.loadFromFile("missle.png")) {
+		missile = sf::Texture();
+	}
+	vector<Homing> homings = createGroup<Homing>(missile, numFlankers, sf::Vector2f(1, 1), 50);
 
 	vector<int> randomFlankings;
 	int i = 0;
@@ -36,7 +40,7 @@ int main()
 		int r = getRand() % 100000 - 10000;
 		randomFlankings.push_back(r);
 	}
-	vector<PatternBullet> spiral = createGroup<PatternBullet>(numFlankers, sf::Vector2f(100, 100), 1);
+	vector<PatternBullet> spiral = createGroup<PatternBullet>(missile, numFlankers, sf::Vector2f(100, 100), 1);
 	Player player;
 	sf::Time delta;
 	sf::Clock clock;

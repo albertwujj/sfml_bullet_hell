@@ -5,7 +5,7 @@
 
 using std::cout;
 
-Homing::Homing(const sf::Vector2f &pos, float speed,  const sf::Texture &texture, const sf::IntRect &rectangle) :
+Homing::Homing(const sf::Vector2f &pos, const sf::Texture &texture, float speed, const sf::IntRect &rectangle) :
 	Bullet(texture, rectangle, pos)
 {
 	target = sf::Vector2f(0, 0);
