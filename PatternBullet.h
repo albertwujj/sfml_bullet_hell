@@ -1,20 +1,20 @@
-#pragma once
-#include <vector>
-#include "Bullet.h"
+#ifndef PATTERN_BULLET_H
+#define PATTERN_BULLET_H
 
-using std::vector;
 
 class PatternBullet : public Bullet
 {
 public:
-	PatternBullet(const sf::Vector2f &pos = sf::Vector2f(0, 0), const sf::Texture &texture = sf::Texture(), const sf::IntRect &rectangle = sf::IntRect(10, 10, 10, 10));
+	PatternBullet(const sf::Vector2f &pos = sf::Vector2f(0, 0), const sf::Texture &texture = sf::Texture(), const sf::IntRect &rectangle = sf::IntRect(10, 10, 20, 20));
 	void addMovement(const sf::Vector2f & movement);
 	void resetMovements();
-	void addSpiral(int initialDir = 0, bool counterclockwise = false, int finalRadius = 1000, int initRadius = 10);
+	void PatternBullet::addSpiral(bool counterclockwise = 0, int finalRadius = 500, int initRadius = 10);
 	void update(sf::Time & delta);
 
 private:
-	vector<sf::Vector2f> movements;
+	list<sf::Vector2f> movements;
 	int sinceLast;
 	int delay;
 };
+
+#endif

@@ -1,13 +1,11 @@
 #pragma once
 
-#define _CRT_SECURE_NO_WARNINGS
 
 #include <SFML/Graphics.hpp>
 #include <stdio.h>
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <vector>
 #include <ctime>
 #include <sstream>
 #include <conio.h>
@@ -34,4 +32,3 @@ using sf::Vector2f;
 
 int getRand();
 void seedRand();
-

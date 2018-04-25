@@ -1,5 +1,8 @@
 
+#ifndef COLLISION_H
+#define COLLISION_H
 /*
+SOURCE: https://github.com/SFML/SFML/wiki/Source%3A-Simple-Collision-Detection
 * File:   collision.h
 * Authors: Nick Koirala (original version), ahnonay (SFML2 compatibility)
 *
@@ -34,8 +37,7 @@ source distribution.
 * Created on 30 January 2009, 11:02
 */
 
-#ifndef COLLISION_H
-#define COLLISION_H
+
 
 namespace Collision {
 	//////

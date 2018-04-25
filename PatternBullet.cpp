@@ -1,7 +1,9 @@
 #include <SFML/Graphics.hpp>
+#include "Bullet.h"
 #include "PatternBullet.h"
 #include <vector>
 #include <iostream>
+#include "vectorops.h"
 using std::cout;
 using std::endl;
 
@@ -18,14 +20,14 @@ void PatternBullet::addMovement(const sf::Vector2f & movement) {
 }
 
 //if a certain number of seconds have passed since the last movement
-//move according to the first movement in the vector, and delete it.
+//move according to the first position in the vector, and delete it.
 //then reset the sinceLast count to 0
 void PatternBullet::update(sf::Time & delta) {
 	sinceLast += delta.asMilliseconds();
 	if (sinceLast > delay && movements.size() > 0) {
 		sf::Vector2f movement = movements.front();
-		movements.erase(movements.begin());
-		move(movement.x, movement.y);
+		movements.pop_front();
+		setPosition(movement);
 		sinceLast = 0;
 	}
 
@@ -37,38 +39,21 @@ void PatternBullet::resetMovements() {
 	movements.clear();
 }
 
-//adds a spiral pattern to the bullet by adding movements that alternate between
-//going up, right, down, left (or backwards for counter-clockwise) by an increasing stepsize each time.
-void PatternBullet::addSpiral(int initialDir, bool counterclockwise, int finalRadius, int initRadius) {
-	int stepsize = initRadius;
-	int i = 0;
-	sf::Vector2f totalDist = sf::Vector2f(0, 0);
-	i = 0;
-	while (i < 10) {
-		int dir = counterclockwise ? 3 - ((i + initialDir) % 4) : (i + initialDir) % 4;
-		switch (dir) {
-			//move up
-		case 0:
-			totalDist += sf::Vector2f(0, -stepsize);
-			addMovement(sf::Vector2f(0, -stepsize));
-			//move right
-		case 1:
-			totalDist += sf::Vector2f(stepsize, 0);
-			addMovement(sf::Vector2f(stepsize, 0));
-			//move left
-		case 2:
-			totalDist += sf::Vector2f(-stepsize, 0);
-			addMovement(sf::Vector2f(-stepsize, 0));
-			//move down
-		case 3:
-			totalDist += sf::Vector2f(0, stepsize);
-			addMovement(sf::Vector2f(0, stepsize));
-		}
-		if ((int)sqrt(totalDist.x * totalDist.x + totalDist.y * totalDist.y) >= finalRadius) {
-			break;
-		}
+//adds a spiral pattern to the bullet by repeatedly rotating and lengthening the displacement vector
+// (and adding the result at each step to movements)
+void PatternBullet::addSpiral(bool counterclockwise, int finalRadius, int initRadius) {
 
-		stepsize *= 1.03;
-		i++;
+	sf::Vector2f initPos = getPosition();
+	//the displacement from starting position
+	sf::Vector2f currOffset = setLength(sf::Vector2f(1, 0), initRadius);
+
+	sf::Transform r;
+	r.rotate(5);
+
+	while (getLength(currOffset) < finalRadius) {
+		addMovement(currOffset + initPos);
+		//rotate and lengthen the displacement vector
+		currOffset = r.transformPoint(currOffset);
+		currOffset = currOffset + setLength(currOffset, 0.1);
 	}
 }

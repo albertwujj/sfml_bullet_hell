@@ -1,4 +1,5 @@
 /*
+SOURCE: https://github.com/SFML/SFML/wiki/Source%3A-Simple-Collision-Detection
 * File:   collision.cpp
 * Author: Nick (original version), ahnonay (SFML2 compatibility)
 */

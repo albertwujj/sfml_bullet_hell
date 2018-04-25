@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "Bullet.h"
 #include "Homing.h"
 #include <iostream>
 
