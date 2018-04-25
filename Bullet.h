@@ -10,7 +10,7 @@ public:
 		this->setPosition(pos);
 		
 	}
-	virtual void update(sf::Time delta) = 0;
+	virtual void update(sf::Time & delta) = 0;
 private:
 	int lifetime;
 

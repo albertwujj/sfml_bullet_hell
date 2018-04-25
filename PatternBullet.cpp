@@ -3,25 +3,27 @@
 #include <vector>
 #include <iostream>
 using std::cout;
+using std::endl;
 
 PatternBullet::PatternBullet(const sf::Vector2f &pos, const sf::Texture &texture, const sf::IntRect &rectangle) :
 	Bullet(texture, rectangle, pos)
 {
-	delay = 300;
+	sinceLast = 0;
+	delay = 20;
 }
 
 //add a movement to the end of the vector of movements, each represented by a 2-element vector- the x and y direction
 void PatternBullet::addMovement(sf::Vector2f & movement) {
 	this->movements.push_back(movement);
-	cout << "hello";
 }
 
 //if a certain number of seconds have passed since the last movement
 //move according to the first movement in the vector, and delete it.
 //then reset the sinceLast count to 0
-void PatternBullet::update(sf::Time delta) {
+void PatternBullet::update(sf::Time & delta) {
 	sinceLast += delta.asMilliseconds();
-	if (sinceLast > delay) {
+	cout << sinceLast << endl;
+	if (sinceLast > delay && movements.size() > 0) {
 		sf::Vector2f movement = movements.front();
 		movements.erase(movements.begin());
 		move(movement.x, movement.y);
@@ -66,7 +68,8 @@ void PatternBullet::addSpiral(int initialDir, bool counterclockwise, int finalRa
 		if ((int)sqrt(totalDist.x * totalDist.x + totalDist.y * totalDist.y) >= finalRadius) {
 			break;
 		}
-		stepsize *= 1.1;
+
+		stepsize *= 1.03;
 		i++;
 	}
 }

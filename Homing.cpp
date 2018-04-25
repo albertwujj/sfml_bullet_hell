@@ -12,7 +12,7 @@ Homing::Homing(const sf::Vector2f &pos, float speed,  const sf::Texture &texture
 	this->speed = speed;
 }
 
-void Homing::update(sf::Time delta) {
+void Homing::update(sf::Time & delta) {
 
 	
 

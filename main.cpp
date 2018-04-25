@@ -22,27 +22,27 @@ int main()
 
 	seedRand();
 
-	
+
 
 	sf::RenderWindow window(sf::VideoMode(1080, 720), "SFML works!");
 	window.setFramerateLimit(60);
 	int numFlankers = 50;
 
 	vector<Homing> homings = createGroup<Homing>(numFlankers, sf::Vector2f(1, 1), 100);
-	
+
 	vector<int> randomFlankings;
 	int i = 0;
 	for (i = 0; i < numFlankers; i++) {
-		int r = getRand() % 10000 - 5000;
+		int r = getRand() % 100000 - 10000;
 		randomFlankings.push_back(r);
 	}
-	vector<PatternBullet> spiral = createGroup<PatternBullet>(numFlankers, sf::Vector2f(100,100), 1);
+	vector<PatternBullet> spiral = createGroup<PatternBullet>(numFlankers, sf::Vector2f(100, 100), 1);
 	Player player;
 	sf::Time delta;
 	sf::Clock clock;
 
 	vector<Bullet*> allBullets;
-	
+
 	for (auto & h : homings) {
 		allBullets.push_back(&h);
 	}
@@ -50,17 +50,17 @@ int main()
 	for (auto & s : spiral) {
 		s.addSpiral();
 		allBullets.push_back(&s);
-	} 
+	}
 
 	int iterations = 0;
 	while (window.isOpen())
 	{
 		delta = clock.restart();
-
+		cout << delta.asSeconds();
 		//set targets for homing bullets
 		//a bullet will, rather than always targetting the exact position of the player, will target
 		//where the player is expected to be, based on current velocity, r seconds into the future
-		if (iterations % 100 == 0) {
+		if (iterations % 50 == 0) {
 			for (auto & r : randomFlankings) {
 				r = getRand() % 100000 - 10000;
 			}
@@ -71,7 +71,7 @@ int main()
 			h++;
 		}
 
-		
+
 		sf::Event event;
 
 		while (window.pollEvent(event))
@@ -79,25 +79,20 @@ int main()
 			if (event.type == sf::Event::Closed)
 				window.close();
 		}
-		for (auto & homing : homings) {
-			homing.update(delta);
-		}
+
 
 		player.Update(delta);
 
 		window.clear();
-		
-		for (auto & s : spiral) {
-			window.draw(s);
-		} 
-		for (auto & homing : homings) {
-			window.draw(homing);
-		}
 
-		for (auto & homing : homings) {
-			if (Collision::CircleTest(player.getSprite(), homing)) {
+
+		for (Bullet *bullet : allBullets) {
+			if (Collision::CircleTest(player.getSprite(), *bullet)) {
 				window.close();
 			}
+			window.draw(*bullet);
+			//with polymorphism, can call the correct update function depending on bullet type
+			bullet->update(delta);
 		}
 		player.Render(window);
 		window.display();
